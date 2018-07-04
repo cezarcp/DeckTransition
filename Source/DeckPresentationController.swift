@@ -591,7 +591,10 @@ final class DeckPresentationController: UIPresentationController, UIGestureRecog
             }
         
         case .ended:
-            if swipeToDismissOption == .onRelease && gestureRecognizer.translation(in: presentedView).y >= dismissThreshold {
+            guard let presented = presentedView else { return }
+            let foo = gestureRecognizer.velocity(in: presented).y
+
+            if foo > 1000 || (swipeToDismissOption == .onRelease && gestureRecognizer.translation(in: presentedView).y >= dismissThreshold) {
                 presentedViewController.dismiss(animated: true, completion: nil)
             }
 
